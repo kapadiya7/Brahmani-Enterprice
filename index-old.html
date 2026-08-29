@@ -282,21 +282,21 @@ section{position:relative;}
 
 /* hero visual */
 .hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-height:420px;}
+.hero-ring{
+  width:min(400px,86%);aspect-ratio:1/1;border-radius:50%;
+  background:radial-gradient(circle at 40% 30%, rgba(215,25,32,0.55), rgba(215,25,32,0.06) 60%, transparent 72%);
+  display:flex;align-items:center;justify-content:center;position:relative;
+  animation:floatY 6s ease-in-out infinite;
+}
 @keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
-.hero-3d{
-  width:min(460px,92%);aspect-ratio:1/1;position:relative;
-  border-radius:50%;
-  background:radial-gradient(circle at 42% 32%, rgba(215,25,32,0.4), rgba(215,25,32,0.05) 58%, transparent 74%);
-}
-.hero-3d canvas{width:100%!important;height:100%!important;display:block;position:relative;z-index:1;}
-.hero-3d-fallback{
-  position:absolute;inset:0;display:none;align-items:center;justify-content:center;
-  border-radius:50%;background:linear-gradient(155deg,#151d30,#0b1220);
+.hero-ring .core{
+  width:64%;aspect-ratio:1/1;border-radius:50%;
+  background:linear-gradient(155deg,#151d30,#0b1220);
   border:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow: inset 0 0 60px rgba(215,25,32,0.18), 0 30px 70px rgba(0,0,0,0.45);
 }
-.hero-3d.no-webgl .hero-3d-fallback{display:flex;}
-.hero-3d.no-webgl canvas{display:none;}
-.hero-3d-fallback img{width:46%;filter:drop-shadow(0 8px 22px rgba(215,25,32,0.45));}
+.hero-ring .core img{width:52%;filter:drop-shadow(0 8px 22px rgba(215,25,32,0.45));}
 .float-card{
   position:absolute;background:#fff;color:var(--navy-950);border-radius:14px;
   padding:12px 16px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;
@@ -611,19 +611,9 @@ footer ul li a:hover{color:#fff;}
 .mobile-bar a.primary{background:var(--red-600);color:#fff;}
 .mobile-bar a.whatsapp{background:#25D366;color:#fff;}
 
-/* scroll reveal — subtle 3D flip-up rather than a flat fade */
-.reveal{
-  opacity:0;
-  transform:perspective(1000px) rotateX(14deg) translateY(26px);
-  transform-origin:50% 100%;
-  transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);
-}
-.reveal.in{opacity:1;transform:perspective(1000px) rotateX(0) translateY(0);}
-
-/* responsive tilt cards: snappier transform transition so pointer tracking feels immediate */
-.tag-card, .why-card, .industry-chip, .trust-card{
-  transition:transform .15s ease-out, box-shadow .3s ease, border-color .3s ease, background .3s ease;
-}
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
 .reveal-stagger .reveal:nth-child(1){transition-delay:.05s;}
 .reveal-stagger .reveal:nth-child(2){transition-delay:.12s;}
 .reveal-stagger .reveal:nth-child(3){transition-delay:.19s;}
@@ -708,23 +698,20 @@ html, body{ overflow-x:hidden; max-width:100%; }
     </div>
 
     <div class="hero-visual">
-      <div class="hero-3d" id="hero3d" aria-hidden="true">
-        <canvas id="heroCanvas"></canvas>
-        <div class="hero-3d-fallback" id="hero3dFallback">
-          <img src="assets/brand-logo.png" alt="Shree Brahmani Enterprise fire safety shield emblem">
+      <div class="hero-ring">
+        <div class="core"><img src="assets/brand-logo.png" alt="Shree Brahmani Enterprise fire safety shield emblem"></div>
+        <div class="float-card fc1">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C9 6 7 8.5 7 12a5 5 0 0 0 10 0c0-2-1-3.5-2-5 .3 1.5-.3 2.5-1 3-.2-2-1-3.5-2-4z"/></svg></span>
+          AMC &amp; Maintenance
         </div>
-      </div>
-      <div class="float-card fc1">
-        <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C9 6 7 8.5 7 12a5 5 0 0 0 10 0c0-2-1-3.5-2-5 .3 1.5-.3 2.5-1 3-.2-2-1-3.5-2-4z"/></svg></span>
-        AMC &amp; Maintenance
-      </div>
-      <div class="float-card fc2">
-        <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/></svg></span>
-        Fire NOC Renewal
-      </div>
-      <div class="float-card fc3">
-        <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 22v-6M4 12H2M22 12h-2M6 6l1.4 1.4M17.6 17.6L19 19M6 19l1.4-1.4M17.6 6.4L19 5"/><circle cx="12" cy="12" r="3"/></svg></span>
-        Hydrant Installation
+        <div class="float-card fc2">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/></svg></span>
+          Fire NOC Renewal
+        </div>
+        <div class="float-card fc3">
+          <span class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 22v-6M4 12H2M22 12h-2M6 6l1.4 1.4M17.6 17.6L19 19M6 19l1.4-1.4M17.6 6.4L19 5"/><circle cx="12" cy="12" r="3"/></svg></span>
+          Hydrant Installation
+        </div>
       </div>
     </div>
   </div>
@@ -1207,7 +1194,6 @@ html, body{ overflow-x:hidden; max-width:100%; }
   <p class="lightbox-caption" id="lightboxCaption"></p>
 </div>
 
-<script src="assets/js/three.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -1518,265 +1504,6 @@ html, body{ overflow-x:hidden; max-width:100%; }
 
   /* ---------- Initial paint ---------- */
   onScroll();
-
-  /* ========================================================
-     3D HERO SCENE — procedural fire extinguisher, Three.js
-     ======================================================== */
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  function initHeroScene(){
-    const mount = document.getElementById("hero3d");
-    const canvas = document.getElementById("heroCanvas");
-    if(!mount || !canvas || typeof THREE === "undefined"){ return; }
-
-    let renderer;
-    try{
-      renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-    }catch(e){
-      mount.classList.add("no-webgl");
-      return;
-    }
-    if(!renderer){ mount.classList.add("no-webgl"); return; }
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-    camera.position.set(0, 0.4, 7.2);
-
-    function sizeRenderer(){
-      const w = mount.clientWidth;
-      const h = mount.clientHeight;
-      if(w === 0 || h === 0){ return; }
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    }
-
-    /* ---- Lighting ---- */
-    const ambient = new THREE.AmbientLight(0x8fa4c9, 0.55);
-    scene.add(ambient);
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.1);
-    keyLight.position.set(3, 5, 4);
-    scene.add(keyLight);
-    const redRim = new THREE.PointLight(0xd71920, 6, 14, 2);
-    redRim.position.set(-3, 1, 2.5);
-    scene.add(redRim);
-    const amberFill = new THREE.PointLight(0xf2a93b, 2.4, 12, 2);
-    amberFill.position.set(2.5, -1.5, 3);
-    scene.add(amberFill);
-
-    /* ---- Procedural fire extinguisher model ---- */
-    const rig = new THREE.Group();
-    scene.add(rig);
-
-    const bodyMat = new THREE.MeshStandardMaterial({ color: 0xd71920, metalness: 0.45, roughness: 0.32 });
-    const darkMat = new THREE.MeshStandardMaterial({ color: 0x151a24, metalness: 0.5, roughness: 0.4 });
-    const metalMat = new THREE.MeshStandardMaterial({ color: 0xcfd6e2, metalness: 0.85, roughness: 0.25 });
-    const gaugeFaceMat = new THREE.MeshStandardMaterial({ color: 0xf5f6f8, metalness: 0.1, roughness: 0.5 });
-
-    // main cylinder body
-    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.72, 2.5, 40), bodyMat);
-    rig.add(body);
-
-    // domed top
-    const dome = new THREE.Mesh(new THREE.SphereGeometry(0.62, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), bodyMat);
-    dome.position.y = 1.25;
-    rig.add(dome);
-
-    // domed bottom
-    const domeBottom = new THREE.Mesh(new THREE.SphereGeometry(0.72, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), bodyMat);
-    domeBottom.rotation.x = Math.PI;
-    domeBottom.position.y = -1.25;
-    rig.add(domeBottom);
-
-    // neck
-    const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.3, 0.4, 24), darkMat);
-    neck.position.y = 1.55;
-    rig.add(neck);
-
-    // valve / handle block
-    const valve = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.22, 0.4), darkMat);
-    valve.position.y = 1.85;
-    rig.add(valve);
-
-    // trigger handle (torus arc)
-    const handle = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.045, 10, 24, Math.PI * 1.3), darkMat);
-    handle.position.set(0, 2.05, 0.1);
-    handle.rotation.set(Math.PI / 2.4, 0, 0);
-    rig.add(handle);
-
-    // carry handle loop
-    const carryHandle = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.05, 10, 20, Math.PI), darkMat);
-    carryHandle.position.set(0, 2.05, -0.25);
-    carryHandle.rotation.set(0, 0, 0);
-    rig.add(carryHandle);
-
-    // gauge dial on the front
-    const gaugeRing = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.03, 10, 24), metalMat);
-    gaugeRing.position.set(0, 1.55, 0.58);
-    rig.add(gaugeRing);
-    const gaugeFace = new THREE.Mesh(new THREE.CircleGeometry(0.14, 24), gaugeFaceMat);
-    gaugeFace.position.set(0, 1.55, 0.6);
-    rig.add(gaugeFace);
-
-    // hose: curved tube from valve down to nozzle
-    const hoseCurve = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(0.3, 1.85, 0.15),
-      new THREE.Vector3(0.85, 1.5, 0.45),
-      new THREE.Vector3(1.05, 0.85, 0.55),
-      new THREE.Vector3(0.95, 0.15, 0.5),
-      new THREE.Vector3(1.15, -0.3, 0.35)
-    ]);
-    const hose = new THREE.Mesh(new THREE.TubeGeometry(hoseCurve, 40, 0.075, 10, false), darkMat);
-    rig.add(hose);
-
-    // nozzle
-    const nozzle = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.09, 0.4, 14), darkMat);
-    nozzle.position.set(1.22, -0.55, 0.3);
-    nozzle.rotation.set(0, 0, Math.PI / 4.2);
-    rig.add(nozzle);
-
-    // shield emblem on the body face (flat plane with drawn canvas texture)
-    const emblemCanvas = document.createElement("canvas");
-    emblemCanvas.width = 256; emblemCanvas.height = 256;
-    const ectx = emblemCanvas.getContext("2d");
-    ectx.clearRect(0,0,256,256);
-    ectx.translate(128,118);
-    ectx.beginPath();
-    ectx.moveTo(0,-92);
-    ectx.bezierCurveTo(45,-78,80,-70,86,-64);
-    ectx.bezierCurveTo(86,10,55,70,0,98);
-    ectx.bezierCurveTo(-55,70,-86,10,-86,-64);
-    ectx.bezierCurveTo(-80,-70,-45,-78,0,-92);
-    ectx.closePath();
-    ectx.fillStyle = "#ffffff";
-    ectx.fill();
-    ectx.lineWidth = 7;
-    ectx.strokeStyle = "#d71920";
-    ectx.stroke();
-    ectx.fillStyle = "#d71920";
-    ectx.beginPath();
-    ectx.moveTo(0,-38);
-    ectx.bezierCurveTo(-16,-12,-24,4,-24,18);
-    ectx.bezierCurveTo(-24,40,-8,54,0,54);
-    ectx.bezierCurveTo(8,54,24,40,24,18);
-    ectx.bezierCurveTo(24,4,16,-12,0,-38);
-    ectx.fill();
-    const emblemTex = new THREE.CanvasTexture(emblemCanvas);
-    emblemTex.needsUpdate = true;
-    const emblem = new THREE.Mesh(
-      new THREE.CircleGeometry(0.46, 32),
-      new THREE.MeshBasicMaterial({ map: emblemTex, transparent: true })
-    );
-    emblem.position.set(0, 0.15, 0.73);
-    rig.add(emblem);
-
-    rig.rotation.y = -0.5;
-    rig.position.y = -0.15;
-    rig.scale.set(0.92, 0.92, 0.92);
-
-    /* ---- Rising ember particles ---- */
-    const emberCount = 70;
-    const emberGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(emberCount * 3);
-    const speeds = new Float32Array(emberCount);
-    for(let i=0;i<emberCount;i++){
-      positions[i*3]   = (Math.random()-0.5) * 5.5;
-      positions[i*3+1] = (Math.random()-0.5) * 5.5;
-      positions[i*3+2] = (Math.random()-0.5) * 3.5;
-      speeds[i] = 0.004 + Math.random() * 0.008;
-    }
-    emberGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    const emberMat = new THREE.PointsMaterial({
-      color: 0xff8a3d, size: 0.045, transparent: true, opacity: 0.75,
-      blending: THREE.AdditiveBlending, depthWrite: false
-    });
-    const embers = new THREE.Points(emberGeo, emberMat);
-    scene.add(embers);
-
-    sizeRenderer();
-    window.addEventListener("resize", sizeRenderer);
-
-    /* ---- Mouse parallax ---- */
-    let targetRotY = -0.5, targetRotX = 0;
-    let curRotY = -0.5, curRotX = 0;
-    window.addEventListener("pointermove", function(e){
-      const nx = (e.clientX / window.innerWidth) * 2 - 1;
-      const ny = (e.clientY / window.innerHeight) * 2 - 1;
-      targetRotY = -0.5 + nx * 0.35;
-      targetRotX = ny * 0.12;
-    }, { passive: true });
-
-    /* ---- Render loop, paused when hero is off-screen or motion is reduced ---- */
-    let running = false;
-    let rafId = null;
-
-    function tick(){
-      if(!running){ return; }
-      if(!prefersReducedMotion){
-        curRotY += (targetRotY - curRotY) * 0.04;
-        curRotX += (targetRotX - curRotX) * 0.04;
-        rig.rotation.y = curRotY + Math.sin(Date.now() * 0.0004) * 0.04;
-        rig.rotation.x = curRotX;
-
-        const posArr = emberGeo.attributes.position.array;
-        for(let i=0;i<emberCount;i++){
-          posArr[i*3+1] += speeds[i];
-          if(posArr[i*3+1] > 2.8){ posArr[i*3+1] = -2.8; }
-        }
-        emberGeo.attributes.position.needsUpdate = true;
-      }
-      renderer.render(scene, camera);
-      rafId = requestAnimationFrame(tick);
-    }
-    function start(){ if(!running){ running = true; tick(); } }
-    function stop(){ running = false; if(rafId){ cancelAnimationFrame(rafId); rafId = null; } }
-
-    if("IntersectionObserver" in window){
-      const heroIO = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){ entry.isIntersecting ? start() : stop(); });
-      }, { threshold: 0.05 });
-      heroIO.observe(mount);
-    } else {
-      start();
-    }
-
-    // render a static frame immediately so first paint isn't blank
-    sizeRenderer();
-    renderer.render(scene, camera);
-  }
-
-  try{ initHeroScene(); }catch(e){
-    const mount = document.getElementById("hero3d");
-    if(mount){ mount.classList.add("no-webgl"); }
-  }
-
-  /* ========================================================
-     3D TILT — vanilla pointer-driven card tilt (services,
-     why-us, industries). Skipped entirely for reduced motion.
-     ======================================================== */
-  if(!prefersReducedMotion && window.matchMedia("(hover: hover)").matches){
-    function bindTilt(selector, strength){
-      document.querySelectorAll(selector).forEach(function(card){
-        card.style.transformStyle = "preserve-3d";
-        card.style.willChange = "transform";
-        card.addEventListener("mousemove", function(e){
-          const r = card.getBoundingClientRect();
-          const px = (e.clientX - r.left) / r.width - 0.5;
-          const py = (e.clientY - r.top) / r.height - 0.5;
-          card.style.transform =
-            "perspective(800px) rotateX(" + (-py * strength) + "deg) rotateY(" + (px * strength) + "deg) translateY(-4px) scale(1.015)";
-        });
-        card.addEventListener("mouseleave", function(){
-          card.style.transform = "";
-        });
-      });
-    }
-    bindTilt(".tag-card", 7);
-    bindTilt(".why-card", 5);
-    bindTilt(".industry-chip", 5);
-    bindTilt(".trust-card", 5);
-  }
 
 })();
 </script>
